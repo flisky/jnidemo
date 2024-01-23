@@ -39,6 +39,8 @@ android {
 }
 
 dependencies {
+    implementation("net.java.dev.jna:jna:5.13.0@aar")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
 
     implementation("androidx.core:core-ktx:1.10.1")
     implementation("androidx.appcompat:appcompat:1.6.1")
@@ -49,4 +51,16 @@ dependencies {
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+}
+
+afterEvaluate {
+    val task = tasks.register<Exec>("uniffi") {
+        workingDir = project.rootDir
+        commandLine("cargo", "build")
+        commandLine("cargo", "run", "--bin", "uniffi-bindgen", "--features",  "uniffi/cli", "generate", "--library", "target/debug/libjnidemo.dylib", "--language", "kotlin", "--out-dir", "app/src/main/java/")
+        commandLine("cargo", "ndk", "-t", "arm64-v8a", "-o", "app/src/main/jniLibs/", "--", "build")
+    }
+    android.applicationVariants.forEach { variant ->
+        variant.javaCompileProvider.get().finalizedBy(task)
+    }
 }

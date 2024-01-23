@@ -8,3 +8,11 @@
 .externalNativeBuild
 .cxx
 local.properties
+
+# rust
+Cargo.lock
+/target/
+
+# uniffi
+/app/src/main/java/uniffi/
+/app/src/main/jniLibs/
