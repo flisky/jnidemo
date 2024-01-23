@@ -41,6 +41,7 @@ android {
 dependencies {
     implementation("net.java.dev.jna:jna:5.13.0@aar")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
+    implementation("rustls:rustls-platform-verifier:0.1.0")
 
     implementation("androidx.core:core-ktx:1.10.1")
     implementation("androidx.appcompat:appcompat:1.6.1")
